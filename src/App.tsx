@@ -9,14 +9,45 @@ import {
   View,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-
-const API_KEY = '47b24d4635cea692830a72a890acc17b';
-
+import {ApolloProvider, ApolloClient, InMemoryCache} from '@apollo/client';
+import {useQuery, gql} from '@apollo/client';
+const client = new ApolloClient({
+  uri: 'http://localhost:4000',
+  cache: new InMemoryCache(),
+});
+const GET_NAME = gql`
+  query api {
+    api {
+      name
+    }
+  }
+`;
 interface ILocation {
   latitude: number;
   longitude: number;
 }
 const App = () => {
+  const {data} = useQuery(GET_NAME);
+
+  console.log(data);
+
+  return (
+    <ApolloProvider client={client}>
+      <Root />
+    </ApolloProvider>
+  );
+};
+
+const styles = StyleSheet.create({
+  backgroundStyle: {
+    backgroundColor: '#fdf6aa',
+    flex: 1,
+  },
+});
+
+export default App;
+
+function Root() {
   const [location, setLocation] = useState<ILocation | undefined>(undefined);
   useLayoutEffect(() => {
     if (Platform.OS === 'ios') {
@@ -49,28 +80,21 @@ const App = () => {
     };
   }, []);
   return (
-    <SafeAreaView style={styles.backgroundStyle}>
-      <StatusBar />
-      {/* <Loading /> */}
-      <View>
-        {location ? (
-          <>
-            <Text>{location?.latitude}</Text>
-            <Text>{location?.longitude}</Text>
-          </>
-        ) : (
-          <Text>Loading...</Text>
-        )}
-      </View>
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={styles.backgroundStyle}>
+        <StatusBar />
+        {/* <Loading /> */}
+        <View>
+          {location ? (
+            <>
+              <Text>{location?.latitude}</Text>
+              <Text>{location?.longitude}</Text>
+            </>
+          ) : (
+            <Text>Loading...</Text>
+          )}
+        </View>
+      </SafeAreaView>
+    </>
   );
-};
-
-const styles = StyleSheet.create({
-  backgroundStyle: {
-    backgroundColor: '#fdf6aa',
-    flex: 1,
-  },
-});
-
-export default App;
+}
