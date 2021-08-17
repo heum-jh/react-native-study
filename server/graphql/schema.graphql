@@ -2,52 +2,52 @@ type Query {
   api: Weather
 }
 type Weather {
-  coord: Coord
-  weather: [WeatherType]
+  coord: Coord!
+  weathers: [WeatherType]!
   base: String
   main: Main
-  visibility: Int
+  visibility: String
   wind: Wind
   clouds: Clouds
-  dt: Int
+  dt: String
   sys: Sys
-  timezone: Int
-  id: Int
+  timezone: String
+  id: String
   name: String
-  cod: Int
+  cod: String
 }
 type Coord {
-  lon: Int
-  lat: Int
+  lon: String
+  lat: String
 }
 type WeatherType {
-  id: Int
+  id: String
   main: String
   description: String
   icon: String
 }
 type Main {
-  temp: Int
-  feels_like: Int
-  temp_min: Int
-  temp_max: Int
-  pressure: Int
-  humidity: Int
-  sea_level: Int
-  grnd_level: Int
+  temp: String
+  feels_like: String
+  temp_min: String
+  temp_max: String
+  pressure: String
+  humidity: String
+  sea_level: String
+  grnd_level: String
 }
 type Wind {
-  speed: Int
-  deg: Int
-  gust: Int
+  speed: String
+  deg: String
+  gust: String
 }
 type Clouds {
-  all: Int
+  all: String
 }
 type Sys {
-  type: Int
-  id: Int
+  type: String
+  id: String
   country: String
-  sunrise: Int
-  sunset: Int
+  sunrise: String
+  sunset: String
 }

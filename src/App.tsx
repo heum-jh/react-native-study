@@ -10,27 +10,16 @@ import {
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {ApolloProvider, ApolloClient, InMemoryCache} from '@apollo/client';
-import {useQuery, gql} from '@apollo/client';
+import Test from './test';
 const client = new ApolloClient({
   uri: 'http://localhost:4000',
   cache: new InMemoryCache(),
 });
-const GET_NAME = gql`
-  query api {
-    api {
-      name
-    }
-  }
-`;
 interface ILocation {
   latitude: number;
   longitude: number;
 }
 const App = () => {
-  const {data} = useQuery(GET_NAME);
-
-  console.log(data);
-
   return (
     <ApolloProvider client={client}>
       <Root />
@@ -89,6 +78,7 @@ function Root() {
             <>
               <Text>{location?.latitude}</Text>
               <Text>{location?.longitude}</Text>
+              <Test />
             </>
           ) : (
             <Text>Loading...</Text>
