@@ -1,3 +1,4 @@
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {
   Alert,
@@ -5,11 +6,9 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import {ApolloProvider, ApolloClient, InMemoryCache} from '@apollo/client';
 import Test from './test';
 const client = new ApolloClient({
   uri: 'http://localhost:4000',
@@ -29,7 +28,6 @@ const App = () => {
 
 const styles = StyleSheet.create({
   backgroundStyle: {
-    backgroundColor: '#fdf6aa',
     flex: 1,
   },
 });
@@ -37,7 +35,10 @@ const styles = StyleSheet.create({
 export default App;
 
 function Root() {
-  const [location, setLocation] = useState<ILocation | undefined>(undefined);
+  const [location, setLocation] = useState<ILocation>({
+    latitude: 0,
+    longitude: 0,
+  });
   useLayoutEffect(() => {
     if (Platform.OS === 'ios') {
       Geolocation.requestAuthorization('always');
@@ -70,21 +71,7 @@ function Root() {
   }, []);
   return (
     <>
-      <SafeAreaView style={styles.backgroundStyle}>
-        <StatusBar />
-        {/* <Loading /> */}
-        <View>
-          {location ? (
-            <>
-              <Text>{location?.latitude}</Text>
-              <Text>{location?.longitude}</Text>
-              <Test />
-            </>
-          ) : (
-            <Text>Loading...</Text>
-          )}
-        </View>
-      </SafeAreaView>
+      <Test lat={location.latitude} lon={location.longitude} />
     </>
   );
 }

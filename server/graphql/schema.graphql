@@ -1,27 +1,27 @@
 type Query {
-  api: Weather
+  api(lat: Float!, lon: Float!): Weather!
 }
 type Weather {
   coord: Coord!
-  weathers: [WeatherType]!
+  weather: [WeatherType!]!
   base: String
   main: Main
   visibility: String
   wind: Wind
   clouds: Clouds
-  dt: String
+  dt: String!
   sys: Sys
   timezone: String
-  id: String
+  id: String!
   name: String
   cod: String
 }
 type Coord {
-  lon: String
-  lat: String
+  lon: String!
+  lat: String!
 }
 type WeatherType {
-  id: String
+  id: String!
   main: String
   description: String
   icon: String
@@ -46,7 +46,7 @@ type Clouds {
 }
 type Sys {
   type: String
-  id: String
+  id: String!
   country: String
   sunrise: String
   sunset: String
